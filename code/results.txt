@@ -1,5 +1,0 @@
-
-
-TOTAL SCORES
-#1: always_all_in:   12.334  (12.334 average)
-#2: random_bid:      2.505  (2.505 average)
