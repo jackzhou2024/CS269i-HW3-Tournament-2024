@@ -1,5 +1,0 @@
-
-
-TOTAL SCORES
-#1: r2:              2483.178  (2483.178 average)
-#2: random_bid:      -2528.063  (-2528.063 average)
