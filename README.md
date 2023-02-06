@@ -21,7 +21,7 @@ Regardless of the auction mode, you can assume that:
 
 
 # Score Calculation
-Your score is your total utility across 1000 rounds of the auction.
+Your score is your total utility across 10000 rounds of the auction.
 You can refer to calcScore function in game_run.py for the methods of score calculation.
 
 For example, say $v_w$, $v_L$ are values of winner/loser, $b_W$, $b_L$ are bids. $u_W$, $u_L$ are the scores.

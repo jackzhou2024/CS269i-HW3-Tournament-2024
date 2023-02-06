@@ -10,7 +10,7 @@ STRATEGY_FOLDER = "exampleStrats"
 CONTEXT_FILE = "context.json"
 
 
-NUM_ROUNDS = 1000
+NUM_ROUNDS = 10000 # You can reduce the num round when you debug
 
 def gen_context():
     f = open(CONTEXT_FILE, 'w')
