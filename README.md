@@ -1,6 +1,6 @@
-# Iterated File-Sharing Dilemma
+# Auction Tournament
 
-This is the CS 269i class project developed by Jinkun Geng. 
+This tournament code is developed by Jinkun Geng. 
 
 
 How this works:
@@ -9,11 +9,24 @@ You are required to write a bidding strategy, following the template in exampleS
 We will compete your strategy against some baselines, as shown in exampleStrats. We will run multiple times: 
 
 During every time, your bot and the baseline will compete for 10000 rounds.
-For every 10000 rounds, we use the same auction mode. There are three auction modes in our implementation (SINGLE_ITEM_FIRST_PRICE, SINGLE_ITEM_SECOND_PRICE,
-SINGLE_ITEM_ALL_PAY). The auction mode will determine how to calculate the scores for bots. (please refer to calcScores function in game_run.py) 
+For every 10000 rounds, we use the same auction mode. There are three auction modes in the code (e.g., SINGLE_ITEM_FIRST_PRICE, SINGLE_ITEM_SECOND_PRICE,
+SINGLE_ITEM_ALL_PAY).The auction mode will determine how to calculate the scores for bots (please refer to calcScores function in game_run.py). During the gradescope competition, we might add more auction modes.
+
 
 
 During each round, both your bot and the baseline will be given an initial value independently chosen from [0,1]. At the beginning of round i, your are also provided with the history in the past i-1 rounds. (refer to the comments in exampleStrats/random_bid.py). The history might be helpful for you to derive the auction mode used in this 10000 rounds, so that you can better design your strategy. 
+
+Regardless of the auction mode, you can assume that, the allocated values for both bots and the payments are monotone in the bid (but they may be randomized).
+
+
+# Score Calculation
+You can refer to calcScore function in game_run.py for the methods of score calculation.
+
+(1) SINGLE_ITEM_FIRST_PRICE, the $payment$ is the bigger price bid between the two bots. Winner's score in this round is its initial $value-payment$; Loser's score is $-payment$.
+
+(2) SINGLE_ITEM_SECOND_PRICE, the $payment$ is the smaller price bid between the two bots. Winner's score in this round is its initial $value-payment$; Loser's score is $-payment$.
+
+(3) SINGLE_ITEM_ALL_PAY, each bot pays the price it bids. Winner's score in this round is its initial value minus its bid price; and loser's score is its initial value minus the sum of its bid price and the winner's bid price. 
 
 
 
