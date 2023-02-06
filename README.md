@@ -22,7 +22,7 @@ Regardless of the auction mode, you can assume that, the allocated values for bo
 # Score Calculation
 You can refer to calcScore function in game_run.py for the methods of score calculation.
 
-Say $v_w$, $v_L$ are values of winner/loser, $b_W$,$b_L$ are bids. $u_W$,$u_L$ are the scores.
+Say $v_w$, $v_L$ are values of winner/loser, $b_W$, $b_L$ are bids. $u_W$, $u_L$ are the scores.
 Then:
 
 
