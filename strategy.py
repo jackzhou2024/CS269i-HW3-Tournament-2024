@@ -14,4 +14,4 @@ import numpy as np
 
 
 def strategy(values, myHistory, competitorHistory):
-    return random.uniform(0,1)*values[0]
+    return values[0]*0.5

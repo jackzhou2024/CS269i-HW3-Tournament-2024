@@ -9,47 +9,30 @@ RESULTS_FILE = "results.txt"
 STRATEGY_FOLDER = "exampleStrats"
 CONTEXT_FILE = "context.json"
 
-# ENum
+# Enum
 SINGLE_ITEM_FIRST_PRICE = 1
 SINGLE_ITEM_SECOND_PRICE = 2
-MULTI_ITEM_FIRST_PRICE = 3
-GSP = 4
-VCG = 5
+SINGLE_ITEM_ALL_PAY = 3
 
-
-
+NUM_ROUNDS = 10000
 
 def gen_context():
     f = open(CONTEXT_FILE, 'w')
     jsonArr = []
     valueArr1 = []
     valueArr2 = []
-    actionTypeArr = []
-    ctrArr1 = []
-    for i in range(200):
+    for i in range(NUM_ROUNDS):
         v1 = random.uniform(0,1)
         valueArr1.append(v1)
         v2 = random.uniform(0,1)
         valueArr2.append(v2)  
-        atp = random.randint(1,5)
-        actionTypeArr.append(atp)
-        ctr1 = random.uniform(0,0.5)
-        ctrArr1.append(ctr1)
     valueArr1.sort()
     valueArr2.sort()
-    ctrArr1.sort()
 
-    for i in range(200):
+    for i in range(NUM_ROUNDS):
         jsonItem = {}
         jsonItem["v1"] = valueArr1[i]
         jsonItem["v2"] = valueArr2[i]
-        jsonItem["auctionType"] = actionTypeArr[i]
-        jsonItem["ctr1"] = ctrArr1[i]
-        if(actionTypeArr[i]==SINGLE_ITEM_FIRST_PRICE or actionTypeArr[i]==SINGLE_ITEM_SECOND_PRICE):
-            jsonItem["ctr2"] = 0
-        else:
-            ctr2 = ctr1* random.uniform(0,1)
-            jsonItem["ctr2"] = ctr2
         jsonArr.append(jsonItem)
     
     json.dump(jsonArr, f, indent=4)
@@ -61,61 +44,34 @@ def gen_context():
 
 
 
-def calcScores(bid1, bid2, v1, v2, atp, ctr1, ctr2):
+def calcScores(bid1, bid2, v1, v2, atp):
     score1, score2 = 0, 0
     # if bid1==bid2, it is a tie, just give each one 0 score
     if atp==SINGLE_ITEM_FIRST_PRICE:
         if bid1 > bid2:
-            score1 = (v1 - bid1)* ctr1 
-            score2 = 0
+            score1 = (v1 - bid1) 
+            score2 = 0-bid1
         elif bid1 < bid2:
-            score1 = 0
-            score2 = (v2-bid2)* ctr1 
+            score1 = 0-bid2
+            score2 = (v2-bid2)
         return score1, score2 
     elif atp == SINGLE_ITEM_SECOND_PRICE:
         if bid1 > bid2:
-            score1 = (v1 - bid2)* ctr1 
-            score2 = 0
+            score1 = v1 - bid2
+            score2 = 0 - bid2
         elif bid1 < bid2:
-            score1 = 0
-            score2 = (v2-bid1)* ctr1 
+            score1 = 0 - bid1
+            score2 = v2-bid1
         return score1, score2 
-    elif atp == MULTI_ITEM_FIRST_PRICE:
+    elif atp == SINGLE_ITEM_ALL_PAY:
         if bid1 > bid2:
-            # player 1 wins the first slot, player 2 gets the second slot
-            score1 = (v1 - bid1)* ctr1 
-            score2 = (v2 - bid2) * ctr2
+            score1 = v1 - bid1
+            score2 = v2-bid2 - bid1
         elif bid1 < bid2:
-            # player 1 gets the first slot, player 2 wins the first slot
-            score1 = (v1 - bid1)* ctr2 
-            score2 = (v2 - bid2) * ctr1
+            score1 = v1 - bid1 - bid2  
+            score2 = v2 -bid2
         return score1, score2 
-    elif atp == GSP:
-        if bid1 > bid2:
-            # player 1 wins the first slot, but pays bid2
-            # player 2 gets the second slot, and pays 0 since we do not have the third player, i.e., bid3=0
-            score1 = (v1 - bid2)* ctr1 
-            score2 = (v2 - 0) * ctr2
-        elif bid1 < bid2:
-            # player 2 wins the first slot, but pays bid1
-            # player 1 gets the second slot, and pays 0 since we do not have the third player, i.e., bid3=0
-            score1 = (v1 - 0)* ctr2 
-            score2 = (v2 - bid1) * ctr1
-        return score1, score2
-    elif atp == VCG:
-        if bid1 > bid2:
-            # player 1 wins the first slot, it pays p1; player 2 pays p2=0
-            p1 = bid2* (ctr1 - ctr2)
-            p2 = 0 
-            score1 = (v1-p1)*ctr1 
-            score2 = (v2-p2)*ctr2
-        elif bid1 < bid2: 
-            # player 2 wins the first slot, it pays p2; player 1 pays p1=0
-            p1 = 0
-            p2 = bid1 * (ctr1-ctr2) 
-            score1 = (v1-p1)*ctr2 
-            score2 = (v2-p2)*ctr1
-        return score1, score2
+  
     else:
         raise Exception("Unreognized auction type")
 
@@ -127,20 +83,24 @@ def runRound(pair):
     
     LENGTH_OF_GAME =len(contextJson)
     totalScore1, totalScore2 = 0, 0
-    for turn in range(LENGTH_OF_GAME):
-        contextItem = contextJson[turn]
-        v1 = contextItem["v1"]
-        v2 = contextItem["v2"]
-        atp = contextItem["auctionType"]
-        # print(contextItem)
-        ctr1 = contextItem["ctr1"]
-        ctr2 = contextItem["ctr2"]
-        
-        bid1 = moduleA.strategy([v1,v2], atp, ctr1, ctr2)
-        bid2 = moduleB.strategy([v2,v1], atp, ctr1, ctr2)
-        score1, score2 = calcScores(bid1, bid2, v1, v2, atp, ctr1, ctr2)
-        totalScore1 += score1
-        totalScore2 += score2
+    # In the gradescope test, we will not simply run following the order
+    # SINGLE_ITEM_FIRST_PRICE->SINGLE_ITEM_SECOND_PRICE->SINGLE_ITEM_ALL_PAY
+    # Therefore, you'd better not hard-code three sub-strategy to cater to 
+    # the order  SINGLE_ITEM_FIRST_PRICE->SINGLE_ITEM_SECOND_PRICE->SINGLE_ITEM_ALL_PAY 
+    for auctionType in [SINGLE_ITEM_FIRST_PRICE, SINGLE_ITEM_SECOND_PRICE, SINGLE_ITEM_ALL_PAY]:
+        history1 = []
+        history2 = []
+        for turn in range(LENGTH_OF_GAME):
+            contextItem = contextJson[turn]
+            v1 = contextItem["v1"]
+            v2 = contextItem["v2"]
+            bid1 = moduleA.strategy([v1,v2], history1, history2)
+            bid2 = moduleB.strategy([v2,v1], history2, history1)
+            score1, score2 = calcScores(bid1, bid2, v1, v2, auctionType)
+            totalScore1 += score1
+            totalScore2 += score2
+            history1.append([v1, bid1, score1])
+            history2.append([v2, bid2, score2])
     return totalScore1, totalScore2
 
 

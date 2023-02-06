@@ -1,0 +1,5 @@
+
+
+TOTAL SCORES
+#1: random_bid:      1261.523  (1261.523 average)
+#2: strategy:        630.706  (630.706 average)
