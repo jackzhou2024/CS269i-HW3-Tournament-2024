@@ -58,12 +58,12 @@ conda install pip
 pip install -r requirements.txt
 ```
 
-After you have successfully create the environment, enter the code environment, and run dilemma_run.py
+After you have successfully create the environment, enter the code environment, and run game_run.py
 
 ```
 cd code 
 
-python dilemma_run.py
+python game_run.py
 ```
 
 Without writing any code, you should be able to run the competition for the existing strategies in the exampleStrats folder. Then, you write your own strategy.py and put the file into the folder, rerun dilemma_run.py to see whether you can beat these baselines.
