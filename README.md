@@ -1,28 +1,30 @@
-# Auction Tournament
+# Auction Auto-bidding Tournament
 
 This tournament code is developed by Jinkun Geng. 
 
 
 How this works:
-You are required to write a bidding strategy, following the template in exampleStrats, i.e., you will implement a function called strategy
+Your task is to write a bidding strategy, following the template in exampleStrats; i.e., you will implement a function called strategy.
 
-We will compete your strategy against some baselines, as shown in exampleStrats. We will run multiple times: 
+We will run your strategy in a 10,000-times-repeated auction against both baseline auto-bidders (as shown in exampleStrats), and classmates' auto-bidders. 
+We are not specifying the auction format a-priori (see restrictions on auction format below), so your auto-bidder will have to learn how to bid based on feedback (value, bid, payment, and allocation) from previous rounds. 
 
-During every time, your bot and the baseline will compete for 10000 rounds.
-For every 10000 rounds, we use the same auction mode. There are three auction modes in the code (e.g., SINGLE_ITEM_FIRST_PRICE, SINGLE_ITEM_SECOND_PRICE,
-SINGLE_ITEM_ALL_PAY).The auction mode will determine how to calculate the scores for bots (please refer to calcScores function in game_run.py). During the gradescope competition, we might add more auction modes.
+There are three example auction modes in the code (e.g., SINGLE_ITEM_FIRST_PRICE, SINGLE_ITEM_SECOND_PRICE,
+SINGLE_ITEM_ALL_PAY), but your auto-bidder should be robust to other auctions as well. The auction mode will determine how to calculate the scores for bots (please refer to calcScores function in game_run.py). During the gradescope competition, we might add more auction modes.
 
 
+During each round, both your bot and the baseline will be given an initial value independently chosen from [0,1]. At the beginning of round i, your are also provided with the history in the past i-1 rounds (refer to the comments in exampleStrats/random_bid.py). The history might be helpful for you to derive the auction mode used in this 10000 rounds, so that you can better design your strategy. 
 
-During each round, both your bot and the baseline will be given an initial value independently chosen from [0,1]. At the beginning of round i, your are also provided with the history in the past i-1 rounds. (refer to the comments in exampleStrats/random_bid.py). The history might be helpful for you to derive the auction mode used in this 10000 rounds, so that you can better design your strategy. 
-
-Regardless of the auction mode, you can assume that, the allocated values for both bots and the payments are monotone in the bid (but they may be randomized).
+Regardless of the auction mode, you can assume that:
+(1) Your auto-bidder's payment is never more than the bid; and
+(2) The allocations and payments are monotone in the bid (but they may be randomized).
 
 
 # Score Calculation
+Your score is your total utility across 10000 rounds of the auction.
 You can refer to calcScore function in game_run.py for the methods of score calculation.
 
-Say $v_w$, $v_L$ are values of winner/loser, $b_W$, $b_L$ are bids. $u_W$, $u_L$ are the scores.
+For example, say $v_w$, $v_L$ are values of winner/loser, $b_W$, $b_L$ are bids. $u_W$, $u_L$ are the scores.
 Then:
 
 
