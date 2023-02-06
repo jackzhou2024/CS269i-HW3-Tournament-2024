@@ -22,11 +22,21 @@ Regardless of the auction mode, you can assume that, the allocated values for bo
 # Score Calculation
 You can refer to calcScore function in game_run.py for the methods of score calculation.
 
-(1) SINGLE_ITEM_FIRST_PRICE, the $payment$ is the bigger price bid between the two bots. Winner's score in this round is its initial $value-payment$; Loser's score is $-payment$.
+Say $v_w$, $v_L$ are values of winner/loser, $b_W$,$b_L$ are bids. $u_W$,$u_L$ are the scores.
+Then:
 
-(2) SINGLE_ITEM_SECOND_PRICE, the $payment$ is the smaller price bid between the two bots. Winner's score in this round is its initial $value-payment$; Loser's score is $-payment$.
 
-(3) SINGLE_ITEM_ALL_PAY, each bot pays the price it bids. Winner's score in this round is its initial value minus its bid price; and loser's score is its initial value minus the sum of its bid price and the winner's bid price. 
+(1) SINGLE_ITEM_FIRST_PRICE, 
+$u_W = v_W - b_W$,
+$u_L = 0$
+
+(2) SINGLE_ITEM_SECOND_PRICE, 
+$u_W = v_W - b_L$,
+$u_L = 0$
+
+(3) SINGLE_ITEM_ALL_PAY, 
+$u_W = v_W - b_W$,
+$u_L = -b_L$
 
 
 

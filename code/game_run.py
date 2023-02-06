@@ -50,25 +50,25 @@ def calcScores(bid1, bid2, v1, v2, atp):
     if atp==SINGLE_ITEM_FIRST_PRICE:
         if bid1 > bid2:
             score1 = (v1 - bid1) 
-            score2 = 0-bid1
+            score2 = 0
         elif bid1 < bid2:
-            score1 = 0-bid2
+            score1 = 0
             score2 = (v2-bid2)
         return score1, score2 
     elif atp == SINGLE_ITEM_SECOND_PRICE:
         if bid1 > bid2:
             score1 = v1 - bid2
-            score2 = 0 - bid2
+            score2 = 0 
         elif bid1 < bid2:
-            score1 = 0 - bid1
+            score1 = 0 
             score2 = v2-bid1
         return score1, score2 
     elif atp == SINGLE_ITEM_ALL_PAY:
         if bid1 > bid2:
             score1 = v1 - bid1
-            score2 = v2-bid2 - bid1
+            score2 = 0-bid2
         elif bid1 < bid2:
-            score1 = v1 - bid1 - bid2  
+            score1 = 0-bid1
             score2 = v2 -bid2
         return score1, score2 
   
@@ -96,6 +96,11 @@ def runRound(pair):
             v2 = contextItem["v2"]
             bid1 = moduleA.strategy([v1,v2], history1, history2)
             bid2 = moduleB.strategy([v2,v1], history2, history1)
+            if(bid1<0 or bid1 >v1):
+                raise Exception("bid price is not valid ", bid1)
+            if(bid2<0 or bid2 >v2):
+                raise Exception("bid price is not valid ", bid2)
+
             score1, score2 = calcScores(bid1, bid2, v1, v2, auctionType)
             totalScore1 += score1
             totalScore2 += score2
