@@ -9,7 +9,7 @@ from mabwiser.mab import MAB, LearningPolicy, NeighborhoodPolicy
 # The length of myHistory and competitorHistory are equal
 # During round n, you receive the history for the past (n-1) rounds, i.e.,
 # The length of myHistory is n-1
-# myHistory[i] is a 4-element list, including 
+# myHistory[i] is a 5-element list, including 
 # (1) your initial value in round i
 # (2) your bid price in round i
 # (3) your allocation result (whether or not you get the item) in round i
@@ -44,8 +44,11 @@ def strategy(value, myHistory):
         Decisions = Decisions[-len(myHistory):]
         Rewards = []
         for i in range(len(myHistory)):
-            # I use the allocation Result as the reward, you can also try using payment as the reward
-            Rewards.append(myHistory[i][2])
+            # I use the utility (score) as the reward, 
+            # you can also try using payment/allocationResult as the reward
+            # Or, think of a more appropriate way to define the reward in each round
+            utility = myHistory[i][0] * myHistory[i][2] - myHistory[i][3] 
+            Rewards.append(utility)
         # print(len(Decisions), "  ", len(Rewards))
     else:
         Decisions = []
