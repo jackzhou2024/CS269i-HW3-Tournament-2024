@@ -6,11 +6,11 @@ This tournament code is developed by Jinkun Geng.
 How this works:
 Your task is to write a bidding strategy, following the template in exampleStrats; i.e., you will implement a function called strategy.
 
-We will run your strategy in a 1,000-times-repeated auction against both baseline auto-bidders (as shown in exampleStrats), and classmates' auto-bidders. 
+We will run your strategy in a 10,000-round-repeated auction against both baseline auto-bidders (as shown in exampleStrats), and classmates' auto-bidders. 
 We are not specifying the auction format a-priori (see restrictions on auction format below), so your auto-bidder will have to learn how to bid based on feedback (value, bid, payment, and allocation) from previous rounds. 
 
-There are three example auction modes in the code (e.g., SINGLE_ITEM_FIRST_PRICE, SINGLE_ITEM_SECOND_PRICE,
-SINGLE_ITEM_ALL_PAY), but your auto-bidder should be robust to other auctions as well. The auction mode will determine how to calculate the scores for bots (please refer to calcScores function in game_run.py). During the gradescope competition, we might add more auction modes.
+There are three example auction modes in the code (e.g., singleItemFirstPrice, singleItemSecondPrice,
+singleItemAllPay), but your auto-bidder should be robust to other auctions as well. The auction mode will determine how to calculate the scores for bots (please refer to calcScores function in game_run.py). During the gradescope competition, we might add more auction modes.
 
 
 During each round, both your bot and the baseline will be given an initial value independently chosen from [0,1]. At the beginning of round i, your are also provided with the history in the past i-1 rounds (refer to the comments in exampleStrats/random_bid.py). The history might be helpful for you to derive the auction mode used in this 10000 rounds, so that you can better design your strategy. 
@@ -50,9 +50,9 @@ In our gradescope test, we may include new auction modes.
 You are expected to write a python file named strategy.py (Please keep this name!). In this file you are expected to implement a function named strategy. After you finish you code, put the strategy.py to the folder exampleStrats, run the game_run.py.
 
 
-We have made two examples in exampleStrats, the simpler one is random_bid_shade.py, which simply bids with a price by multiplying a factor with the value; the other is a more complicated algorithm called Multiplicative weight update method, and you can find some introduction at https://en.wikipedia.org/wiki/Multiplicative_weight_update_method. Briefly speaking, you can design some experts to make predictions to help you decide whether or not to increase the bid price for the following rounds. Refer to multiplicative_weight_update.py for details.
+We have made two examples in exampleStrats, the simpler one is random_bid_shade.py, which simply bids with a price by multiplying a factor with the value; the other is a more complicated Multi-Bandit-Arm algorithm, we are using MABWiser lib to implement it, and you can read more info at  https://fidelity.github.io/mabwiser/about.html and implement your multi-bandit-arm algorithm following the example in multi-bandit-arm.py
 
-While designing your strategy function, you will receive the history of your past bids, which is represented as myHistory list (refer to the comments in random_bid_shade.py/multiplicative_weight_update.py). You can choose to use/not use the history information to help you design better algorithms.
+While designing your strategy function, you will receive the history of your past bids, which is represented as myHistory list (refer to the comments in random_bid_shade.py/multi-bandit-arm.py). You can choose to use/not use the history information to help you design better algorithms.
 
 
 # Tips
