@@ -19,7 +19,7 @@ from mabwiser.mab import MAB, LearningPolicy, NeighborhoodPolicy
 # We are using MABWiser lib, you should install it by running pip install mabwiser
 # Please check the doc https://fidelity.github.io/mabwiser/examples.html and you can 
 # implement many fancy algorithms by yourself
-
+# Refer to the MAB documents and explore which policy/parameters yields the best performane for you
 
 # Define your arm, here we define 10 arms, each arm is a factor between [0.1,1.0]
 # After you make a decision of the arm to use,  the bid price will be value * arm[i] 
