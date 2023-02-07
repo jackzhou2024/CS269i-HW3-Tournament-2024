@@ -53,20 +53,24 @@ def strategy(value, myHistory):
     else:
         Decisions = []
         Rewards = []
-    if(len(myHistory)<100):
-        # For the first 100 rounds, just randomly make decisions to explore
-        decision = int(random.randrange(0,10,1))
+    # print("decisions ", Decisions)
+    # print("rewards ", Rewards)
+    if(len(myHistory)<10):
+        # For the first 10 rounds, just randomly make decisions to explore
+        decision = int(random.randrange(1,11,1)) * 0.1
         Decisions.append(decision)
-        bidPrice =  Arms[decision] * value
+        bidPrice =  decision * value
     else:
         # Model 
-        mab = MAB(Arms, LearningPolicy.UCB1(alpha=1.25))
+        mab = MAB(Arms, learning_policy=LearningPolicy.EpsilonGreedy(epsilon=0.15),seed=123456)
         # Train
         mab.fit(Decisions, Rewards)
-        decision = int(mab.predict())
+        # print("predict ", mab.predict())
+        decision = mab.predict()
         Decisions.append(decision)
-        bidPrice =  Arms[decision] * value
+        bidPrice = decision * value
 
+    # print(decision, "\t ",  decision , "\t", bidPrice )
     return bidPrice
     
 
