@@ -1,5 +1,6 @@
 import random
 import numpy as np
+from sklearn.preprocessing import StandardScaler
 from mabwiser.mab import MAB, LearningPolicy, NeighborhoodPolicy
 
 # value is your initial value in this round, you should not bid a higher price than value
@@ -38,6 +39,7 @@ def strategy(value, myHistory):
     global Rewards
     global Decisions
     bidPrice = 0
+    Values = []
     if len(myHistory)>0:
         # Since there can be multiple times of running, trim the Decision list so that
         # the decision history belongs to one single run 
@@ -49,10 +51,13 @@ def strategy(value, myHistory):
             # Or, think of a more appropriate way to define the reward in each round
             utility = myHistory[i][0] * myHistory[i][2] - myHistory[i][3] 
             Rewards.append(utility)
+            Values.append([myHistory[i][0]])
         # print(len(Decisions), "  ", len(Rewards))
     else:
         Decisions = []
         Rewards = []
+
+
     # print("decisions ", Decisions)
     # print("rewards ", Rewards)
     if(len(myHistory)<10):
@@ -61,15 +66,26 @@ def strategy(value, myHistory):
         Decisions.append(decision)
         bidPrice =  decision * value
     else:
-        # Model 
-        mab = MAB(Arms, learning_policy=LearningPolicy.EpsilonGreedy(epsilon=0.15),seed=123456)
-        # Train
+
+        # You can refer to the MABWiser documents and try different contextual/context-free polices
+        
+        ## Context-free Multi-Armed-Bandit
+        mab = MAB(Arms, learning_policy=LearningPolicy.UCB1(alpha=1.25))
         mab.fit(Decisions, Rewards)
-        # print("predict ", mab.predict())
         decision = mab.predict()
+        # print("predict ", mab.predict())
+        
+        # ## Contextual Multi-Armed-Bandit
+        # mab = MAB(Arms, learning_policy=LearningPolicy.LinUCB(alpha=1.25))
+        # ## Contextual model is much slower than Context-free model
+        # mab.fit(Decisions, Rewards, contexts=np.array(Values))
+        # decision = mab.predict([[value]])
+
         Decisions.append(decision)
         bidPrice = decision * value
 
+    # if(len(myHistory) % 1000 == 0):
+    #     print("Len ", len(myHistory))
     # print(decision, "\t ",  decision , "\t", bidPrice )
     return bidPrice
     
