@@ -48,9 +48,9 @@ In our gradescope test, we may include new auction modes.
 You are expected to write a python file named strategy.py (Please keep this name!). In this file you are expected to implement a function named strategy. After you finish you code, put the strategy.py to the folder exampleStrats, run the game_run.py.
 
 
-We have made two examples in exampleStrats, the simpler one is random_bid_shade.py, which simply bids with a price by multiplying a factor with the value; the other is a more complicated Multi-Bandit-Arm algorithm, we are using MABWiser lib to implement it, and you can read more info at  https://fidelity.github.io/mabwiser/about.html and implement your multi-bandit-arm algorithm following the example in multi-bandit-arm.py
+We have made three examples in exampleStrats, the simpler one is random_bid_shade.py, which simply bids with a price by multiplying a factor with the value; the other is a more complicated Multi-Armed-Bandit (MAB) algorithm, we are using MABWiser lib to implement it, and you can read more info at  https://fidelity.github.io/mabwiser/about.html and implement your MAB algorithm following the example, and we have provided both contextual MAB and context-free MAB for your reference.
 
-While designing your strategy function, you will receive the history of your past bids, which is represented as myHistory list (refer to the comments in random_bid_shade.py/multi-bandit-arm.py). You can choose to use/not use the history information to help you design better algorithms.
+While designing your strategy function, you will receive the history of your past bids, which is represented as myHistory list (refer to the comments in random_bid_shade.py/context-free-multi-armed-bandit.py/contextual-multi-armed-bandit.py). You can choose to use/not use the history information to help you design better algorithms.
 
 
 # Tips
