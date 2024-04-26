@@ -59,7 +59,7 @@ Intuitively, you don't want to spend your budget too slowly or too quickly. We h
 - Reserve pricing:  This strategy uses a gradient-based method to maintain a reserve price $r$, suppose the current value is $v$, the strategy bids $v$ when $v > r$ and bids $0$ when  $1-v \le r$. $r$ decreases when spending is too fast, and increases when spending is too slow.
 
 
-We have made three examples in exampleStrats, the simpler one is random_bid_shade.py, which simply bids with a price by multiplying a factor with the value; the other is a more complicated Multi-Armed-Bandit (MAB) algorithm, we are using MABWiser lib to implement it, and you can read more info at  https://fidelity.github.io/mabwiser/about.html and implement your MAB algorithm following the example, and we have provided both contextual MAB and context-free MAB for your reference.
+If you want to implement more complicated Multi-Armed-Bandit (MAB) algorithms, you can use the MABWiser library to implement it, and we will install this library in our testing enviroment. You can read more info at  https://fidelity.github.io/mabwiser/about.html and implement your MAB algorithm.
 
 While designing your strategy function, you will receive your remaining budget, number remaining rounds, and the auction history of past rounds. You can choose to use/not use provided information to help you design better algorithms.
 
