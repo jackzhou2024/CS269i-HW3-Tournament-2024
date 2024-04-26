@@ -28,23 +28,22 @@ Then:
 
 
 (1) SINGLE_ITEM_FIRST_PRICE, 
-$s_W += v_W$,
-$s_L += 0$,
-$B_W -= b_W$,
-$B_L -= 0$,
+$s_W$ += $v_W$,
+$s_L$ += $0$,
+$B_W$ -= $b_W$,
+$B_L$ -= $0$.
 
 (2) SINGLE_ITEM_SECOND_PRICE, 
-$s_W += v_W$,
-$s_L += 0$,
-$B_W -= b_L$,
-$B_L -= 0$,
+$s_W$ += $v_W$,
+$s_L$ += $0$,
+$B_W$ -= $b_L$,
+$B_L$ -= $0$.
 
 (3) SINGLE_ITEM_ALL_PAY, 
-$s_W += v_W,
-$s_L += 0$,
-$B_W -= b_W$,
-$B_L -= b_L$,
-
+$s_W$ += $v_W$,
+$s_L$ += $0$,
+$B_W$ -= $b_W$,
+$B_L$ -= $b_L$.
 
 You can check the auctionStrats folder to see how we implement these three modes to decide the allocation result (i.e., who is the winner) and the payment.
 
