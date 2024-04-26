@@ -12,7 +12,7 @@ We are not specifying the auction format a-priori (see restrictions on auction f
 There are three example auction modes in the code (e.g., singleItemFirstPrice, singleItemSecondPrice,
 singleItemAllPay), but your auto-bidder should be robust to other auctions as well. The auction mode will determine how to calculate the allocation and payments for auto-bidders. During the gradescope competition, we might add more auction modes.
 
-**Each bidder starts with a budget of 2,500 and must adhere to this total spending limit over the course of 10,000 rounds. The goal is to obtain as much total value as possible. Please note the goal here is value maximization, distinct from utility maximization. **
+**Each bidder starts with a budget of 2,500 and must adhere to this total spending limit over the course of 10,000 rounds. The goal is to obtain as much total value as possible. Please note the goal here is value maximization, distinct from utility maximization.**
 
 During each round, both your bidding strategy and your competitor's will be given an value independently chosen from a uniform distribution over [0,1]. At the beginning of round i, your are also provided with the history in the past i-1 rounds (refer to the comments in example strategies). The history might be helpful for you to derive the auction mode used in this 10000 rounds, so that you can better design your strategy. 
 
