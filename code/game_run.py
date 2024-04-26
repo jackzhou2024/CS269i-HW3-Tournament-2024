@@ -11,6 +11,7 @@ CONTEXT_FILE = "context.json"
 
 
 NUM_ROUNDS = 10000 # You can reduce the num round when you debug
+TOTAL_BUDGET = 0.25 * NUM_ROUNDS
 
 def gen_context():
     f = open(CONTEXT_FILE, 'w')
@@ -32,19 +33,19 @@ def gen_context():
     json.dump(jsonArr, f, indent=4)
 
 
-# gen_context()       
+gen_context()       
 # exit(0)
 
 
 
 
-def calcScore(value, allocationResult, payment):
+def calcScore(value, allocationResult):
     if allocationResult == 1:
-        # winner, utility(score) is value-payment
-        return value - payment
+        # winner, score is value
+        return value
     else:
-        # loser: utility is 0-payment
-        return 0 - payment
+        # loser:  score 0
+        return 0
     
 
 def runRound(pair, auction):
@@ -59,22 +60,29 @@ def runRound(pair, auction):
 
     history1 = []
     history2 = []
+    budget1 = TOTAL_BUDGET
+    budget2 = TOTAL_BUDGET
+    
     for turn in range(LENGTH_OF_GAME):
         contextItem = contextJson[turn]
         v1 = contextItem["v1"]
         v2 = contextItem["v2"]
-        bid1 = moduleA.strategy(v1, history1)
-        bid2 = moduleB.strategy(v2, history2)
-        if(bid1<0 or bid1 >v1):
-            raise Exception("bid1 price is not valid (either <0 or large than v1) ", bid1)
-        if(bid2<0 or bid2 >v2):
-            raise Exception("bid2 price is not valid (either <0 or large than v2)  ", bid2)
+        bid1 = moduleA.strategy(v1, budget1, LENGTH_OF_GAME - turn, history1)
+        bid2 = moduleB.strategy(v2, budget2, LENGTH_OF_GAME - turn, history2)
+        bid1 = min(bid1, budget1)
+        bid2 = min(bid2, budget2)
+        if(bid1 < 0):
+            raise Exception("bid1 price is not valid (< 0) ", bid1)
+        if(bid2 < 0):
+            raise Exception("bid2 price is not valid (< 0)  ", bid2)
 
         # print("bid1=", bid1, " bid2=",bid2)
         auctionResult = moduleAuction.auctionStrategy(bid1, bid2)
 
-        score1 = calcScore(v1, auctionResult[0][0], auctionResult[0][1])
-        score2 = calcScore(v2, auctionResult[1][0], auctionResult[1][1])
+        score1 = calcScore(v1, auctionResult[0][0])
+        score2 = calcScore(v2, auctionResult[1][0])
+        budget1 -= auctionResult[0][1]
+        budget2 -= auctionResult[1][1]
         totalScore1 += score1
         totalScore2 += score2
         history1.append([v1, bid1, auctionResult[0][0], auctionResult[0][1] ])
