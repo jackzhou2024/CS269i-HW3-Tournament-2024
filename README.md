@@ -62,7 +62,7 @@ Intuitively, you don't want to spend your budget too slowly or too quickly. We h
 
 While designing your strategy function, you will receive your remaining budget, number remaining rounds, and the auction history of past rounds. You can choose to use/not use provided information to help you design better algorithms.
 
-The example strategies include implementations of Multi-Arm Bandit (MAB) algoirthms, which are go-to algorithms for optimizing in an uncertain and dynamic environment. If you want to implement more MAB algorithms, you can use the MABWiser library to implement them, and we will install this library in our testing enviroment. You can read more info at https://fidelity.github.io/mabwiser/about.html and implement your MAB algorithm.
+If you want to explore more sophisticated strategies. Multi-Arm Bandit (MAB) algoirthms, which are go-to algorithms for optimizing in an uncertain and dynamic environment, can be good choices. If you want to implement MAB algorithms, you can use the MABWiser library to implement them, and we will install this library in our testing enviroment. You can read more info at https://fidelity.github.io/mabwiser/about.html and implement your MAB algorithm.
 
 
 # Tips
