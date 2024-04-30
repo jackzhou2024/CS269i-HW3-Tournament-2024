@@ -56,7 +56,7 @@ You are expected to write a python file named strategy.py (Please keep this name
 
 Intuitively, you don't want to spend your budget too slowly or too quickly. We have made three example strategies which aim to pace the budget evenly across all rounds. 
 - Bid shading: This strategy uses a gradient-based method to maintain a shading factor $\mu$, suppose the current value is $v$, the strategy bids $v / (\mu + 1)$. $\mu$ increases when spending is too fast, and decreases when spending is too slow.
-- Throttling: This strategy uses a gradient-based method to maintain a throttling factor $\tau$, suppose the current value is $v$, the strategy bids $v$ with probability $\tau$ and bids $0$ with probability $1-\tau$. $\tau$ increases when spending is too fast, and decreases when spending is too slow.
+- Throttling: This strategy uses a gradient-based method to maintain a throttling factor $\tau$, suppose the current value is $v$, the strategy bids $v$ with probability $ 1/ (1 + \tau)$ and bids $0$ with probability $\tau / (1 + \tau)$. $\tau$ increases when spending is too fast, and decreases when spending is too slow.
 - Reserve pricing:  This strategy uses a gradient-based method to maintain a reserve price $r$, suppose the current value is $v$, the strategy bids $v$ when $v > r$ and bids $0$ when  $1-v \le r$. $r$ decreases when spending is too fast, and increases when spending is too slow.
 
 
