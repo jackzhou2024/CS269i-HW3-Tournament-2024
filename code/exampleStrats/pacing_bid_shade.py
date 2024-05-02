@@ -17,6 +17,10 @@ AVG_SPEND = 0.25 # you expect to spend 0.25 per round
 EPS = 0.05 # learning rate
 mu = 0 # shading factor
 
+# return the pseudonym of your strategy
+def get_name():
+    return "bid_shading"
+
 def update_pacing_factor(payment):
     global mu
     mu += EPS * (payment - AVG_SPEND)
