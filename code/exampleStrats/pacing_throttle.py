@@ -18,6 +18,10 @@ AVG_SPEND = 0.25 # you expect to spend 0.25 per round
 EPS = 0.05 # learning rate
 tau = 0 # throttling factor
 
+# return the pseudonym of your strategy
+def get_name():
+    return "throttling"
+
 def update_pacing_factor(payment):
     global tau
     tau += EPS * (payment - AVG_SPEND)
