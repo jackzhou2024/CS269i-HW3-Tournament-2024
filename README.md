@@ -17,7 +17,7 @@ During each round, both your bidding strategy and your competitor's will be give
 
 Regardless of the auction mode, you can assume that the payment is never more than your bid.
 
-**Note:** Please do not write code that inspects or manipulates the auction format, the objective, or your opponents' strategies.
+**Note: Please do not write code that inspects or manipulates the auction format, the objective, or your opponents' strategies.**
 
 
 # Score Calculation
