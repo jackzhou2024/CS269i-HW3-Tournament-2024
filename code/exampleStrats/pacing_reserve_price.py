@@ -18,6 +18,10 @@ AVG_SPEND = 0.25 # you expect to spend 0.25 per round
 EPS = 0.05 # learning rate
 r = 0 # reserve price
 
+# return the pseudonym of your strategy
+def get_name():
+    return "reserve_price"
+
 def update_pacing_factor(payment):
     global r
     r += EPS * (payment - AVG_SPEND)
